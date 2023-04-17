@@ -6,7 +6,7 @@ console.log("Welcome to websocket chat server", PORT);
 
 const checkUser = (uid) => {
     console.log('find:', uid);
-    const found = users.find(u => {u.user.uid === uid});
+    const found = users.find(u => u.user.uid === uid);
     console.log('found: ', found);
     return found;
 }
