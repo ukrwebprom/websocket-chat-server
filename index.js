@@ -2,7 +2,6 @@ const WebSocket = require('ws');
 const PORT = process.env.PORT || 8080;
 const server = new WebSocket.Server({ port:PORT });
 const users = [];
-console.log("Welcome to websocket chat server");
 
 const checkUser = (uid) => {
     return users.find(u => {u.uid === uid})
@@ -12,10 +11,9 @@ const sendToAll = (id, message) => {
 }
 
 server.on('connection', (ws) => {
-    console.log('connected');
 
     ws.on('close', () => {
-        console.log('closed');
+        
     })
 
     ws.on('message', message => {
