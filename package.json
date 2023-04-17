@@ -10,6 +10,8 @@
   "author": "Yurii Pochtiennykh",
   "license": "ISC",
   "dependencies": {
+    "nanoid": "^4.0.2",
+    "simple-random": "^1.0.3",
     "ws": "^8.13.0"
   }
 }

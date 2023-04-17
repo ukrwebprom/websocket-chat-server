@@ -1,4 +1,5 @@
 const WebSocket = require('ws');
+var sr = require('simple-random');
 const PORT = process.env.PORT || 8080;
 const server = new WebSocket.Server({ port:PORT });
 const users = [];
@@ -34,6 +35,6 @@ server.on('connection', (ws) => {
                 users.push(newUser);
                 sendToAll(data.ID, {message:'lm319', uid:data.uid, photo:data.photo, name:data.name});}
             }
-        else sendToAll(data.ID, {message:data.message, uid:data.uid});
+        else sendToAll(data.ID, {message:data.message, uid:data.uid, messID:sr()});
     })
 })
