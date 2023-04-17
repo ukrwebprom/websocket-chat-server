@@ -29,7 +29,7 @@ server.on('connection', (ws) => {
                 ws,
                 user
             })
-            console.log("new user, added")
+            console.log("new user, added", users)
             }
     
         sendToAll(user.ID, user);
