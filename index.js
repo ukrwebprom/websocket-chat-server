@@ -20,13 +20,15 @@ server.on('connection', (ws) => {
 
     ws.on('message', message => {
         const user = JSON.parse(message);
-        if(!checkUser(user.uid)) users.push(
+        if(!checkUser(user.uid)) {
+            users.push(
             {
                 ws,
                 user
+            })
+            console.log("new user, added")
             }
-            
-        )
+    
         sendToAll(user.ID, user);
     })
 })
