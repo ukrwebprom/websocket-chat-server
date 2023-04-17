@@ -21,6 +21,7 @@ server.on('connection', (ws) => {
 
     ws.on('message', message => {
         const data = JSON.parse(message);
+        console.log(data);
         if(!checkUser(data.uid)) 
             users.push(
             {
