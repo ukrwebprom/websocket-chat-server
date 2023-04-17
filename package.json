@@ -1,0 +1,14 @@
+{
+  "name": "websocket-chat-server",
+  "version": "1.0.0",
+  "description": "websocket chat server side",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yurii Pochtiennykh",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^8.13.0"
+  }
+}
