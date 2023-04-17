@@ -2,7 +2,7 @@ const WebSocket = require('ws');
 const PORT = process.env.PORT || 8080;
 const server = new WebSocket.Server({ port:PORT });
 const users = [];
-console.log("Welcome to websocket chat server");
+console.log("Welcome to websocket chat server", PORT);
 
 const checkUser = (uid) => {
     return users.find(u => {u.uid === uid})
