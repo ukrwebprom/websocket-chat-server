@@ -6,7 +6,7 @@ console.log("Welcome to websocket chat server", PORT);
 
 const checkUser = (uid) => {
     console.log('find:', uid);
-    return users.find(u => u.user.uid === uid);
+    return users.find(u => u.data.uid === uid);
 }
 const sendToAll = (id, message) => {
     users.filter(u => u.data.ID === id).forEach(e => {e.ws.send(JSON.stringify(message))});
