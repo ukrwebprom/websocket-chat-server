@@ -29,6 +29,6 @@ server.on('connection', (ws) => {
                 data
             })
     
-        sendToAll(user.ID, data);
+        sendToAll(data.ID, data);
     })
 })
