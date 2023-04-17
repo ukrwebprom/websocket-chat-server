@@ -4,12 +4,12 @@ const server = new WebSocket.Server({ port:PORT });
 const users = [];
 console.log("Welcome to websocket chat server", PORT);
 
-const checkUser = (uid) => {
-    console.log('find:', uid);
-    return users.find(u => u.data.uid === uid);
+const noSuchUser = (uid, chatID) => {
+    if(users.find(u => u.uid === uid && u.chatID === chatID) === undefined) return true;
+    else return false;
 }
 const sendToAll = (id, message) => {
-    users.filter(u => u.data.ID === id).forEach(e => {e.ws.send(JSON.stringify(message))});
+    users.filter(u => u.chatID === id).forEach(e => {e.ws.send(JSON.stringify(message))});
 }
 
 server.on('connection', (ws) => {
@@ -21,14 +21,19 @@ server.on('connection', (ws) => {
 
     ws.on('message', message => {
         const data = JSON.parse(message);
-        console.log(data);
-        if(!checkUser(data.uid)) 
-            users.push(
-            {
-                ws,
-                data
-            })
-    
-        sendToAll(data.ID, data);
+        if(data.message === 'lm318') {
+            if(noSuchUser(data.uid, data.ID)) {
+                const newUser ={
+                    ws,
+                    chatID:data.ID,
+                    uid:data.uid,
+                    photo:data.photo,
+                    name:data.name,
+                    online:true
+                }
+                users.push(newUser);
+                sendToAll(data.ID, {message:'lm319', uid:data.uid, photo:data.photo, name:data.name});
+            }
+        else sendToAll(data.ID, {message:data.message, uid:data.uid});
     })
 })
