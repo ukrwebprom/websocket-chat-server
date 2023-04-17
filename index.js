@@ -9,7 +9,7 @@ const checkUser = (uid) => {
     return users.find(u => u.user.uid === uid);
 }
 const sendToAll = (id, message) => {
-    users.filter(u => u.user.ID === id).forEach(e => {e.ws.send(JSON.stringify(message))});
+    users.filter(u => u.data.ID === id).forEach(e => {e.ws.send(JSON.stringify(message))});
 }
 
 server.on('connection', (ws) => {
