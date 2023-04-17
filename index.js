@@ -6,9 +6,7 @@ console.log("Welcome to websocket chat server", PORT);
 
 const checkUser = (uid) => {
     console.log('find:', uid);
-    const found = users.find(u => u.user.uid === uid);
-    console.log('found: ', found);
-    return found;
+    return users.find(u => u.user.uid === uid);
 }
 const sendToAll = (id, message) => {
     users.filter(u => u.user.ID === id).forEach(e => {e.ws.send(JSON.stringify(message))});
@@ -22,16 +20,14 @@ server.on('connection', (ws) => {
     })
 
     ws.on('message', message => {
-        const user = JSON.parse(message);
-        if(!checkUser(user.uid)) {
+        const data = JSON.parse(message);
+        if(!checkUser(data.uid)) 
             users.push(
             {
                 ws,
-                user
+                data
             })
-            console.log("new user, added", users)
-            }
     
-        sendToAll(user.ID, user);
+        sendToAll(user.ID, data);
     })
 })
