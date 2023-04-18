@@ -48,16 +48,13 @@ const removeUser = (zombie) => {
 server.on('connection', (ws) => {
     console.log('connected');
     let currentUser = null;
-    
+
     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
     }
     ping = setInterval(sendPing, 5000);
 
-    ws.on('close', () => {
-        console.log('closed');
-        killTimeout = setTimeout(removeUser, 10000, currentUser);
-    })
+    
 
     ws.on('message', message => {
         const data = JSON.parse(message);
@@ -78,5 +75,10 @@ server.on('connection', (ws) => {
                 sendToAll(data.cahtID, {message:'lm319', users:getChatUsers(data.cahtID)});}
             }
         else sendToAll(data.cahtID, {message:data.message, userID:data.userID, messID:sr()});
+
+        ws.on('close', () => {
+            console.log('closed');
+            killTimeout = setTimeout(removeUser, 10000, data.userID);
+        })
     })
 })
