@@ -64,7 +64,6 @@ server.on('connection', (ws, req) => {
     }
 
     console.log('connected', chatID, userID  );
-    let currentUser = null;
 
     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
