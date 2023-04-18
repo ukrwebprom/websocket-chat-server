@@ -42,7 +42,7 @@ server.on('connection', (ws) => {
 
     ws.on('close', () => {
         console.log('closed');
-        killTimeout = setTimeout(removeUser, 10000, {currentUser});
+        killTimeout = setTimeout(removeUser, 10000, currentUser);
     })
 
     ws.on('message', message => {
