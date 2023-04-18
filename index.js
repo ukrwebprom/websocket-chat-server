@@ -81,7 +81,8 @@ server.on('connection', (ws) => {
 
         ws.on('close', () => {
             console.log('closed');
-            killTimeout = setTimeout(removeUser, 10000, data.userID);
+            removeUser(data.userID);
+            //killTimeout = setTimeout(removeUser, 10000, data.userID);
         })
     })
 })
