@@ -15,6 +15,15 @@ const noSuchUser = (uid) => {
 const sendToAll = (id, message) => {
     users.filter(u => u.chatID === id).forEach(e => {e.ws.send(JSON.stringify(message))});
 }
+const getChatUsers = (chatID) => {
+    return users.filter(u => u.chatID === chatID).map(u => {
+        return {
+            userID: u.userID, 
+            photo: u.photo, 
+            name: u.name
+          }
+    })
+}
 
 const removeUser = (zombie) => {
     console.log('zombie:', zombie);
@@ -23,14 +32,8 @@ const removeUser = (zombie) => {
     clearTimeout(killTimeout);
     clearInterval(ping);
     console.log('removed');
-    const userlist = users.map(u => {
-        return {
-          userID: u.userID, 
-          photo: u.photo, 
-          name: u.name
-        }
-      })
-    sendToAll(chat, {message:'lm319', users:userlist});
+    
+    sendToAll(chat, {message:'lm319', users:getChatUsers(chat)});
 }
 
 server.on('connection', (ws) => {
@@ -61,14 +64,8 @@ server.on('connection', (ws) => {
                     name:data.name,
                 }
                 users.push(newUser);
-                const userlist = users.map(u => {
-                    return {
-                      userID: u.userID, 
-                      photo: u.photo, 
-                      name: u.name
-                    }
-                  })
-                sendToAll(data.ID, {message:'lm319', users:userlist});}
+                
+                sendToAll(data.ID, {message:'lm319', users:getChatUsers(data.cahtID)});}
             }
         else sendToAll(data.ID, {message:data.message, userID:data.userID, messID:sr()});
     })
