@@ -74,7 +74,10 @@ server.on('connection', (ws) => {
                 
                 sendToAll(data.cahtID, {message:'lm319', users:getChatUsers(data.cahtID)});}
             }
-        else sendToAll(data.cahtID, {message:data.message, userID:data.userID, messID:sr()});
+        else {
+            console.log("got message:", data.message);
+            sendToAll(data.cahtID, {message:data.message, userID:data.userID, messID:sr()});
+        }
 
         ws.on('close', () => {
             console.log('closed');
