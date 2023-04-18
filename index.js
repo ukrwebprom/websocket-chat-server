@@ -49,12 +49,19 @@ server.on('connection', (ws, req) => {
     const url = new URL(req.url, 'wss://tranquil-reaches-58824.herokuapp.com/');
     const chatID = url.searchParams.get('chatID');
     const userID = url.searchParams.get('userID');
-/*     const user = {
-      ws,
-      name,
-      id,
-      isOnline:true
-    } */
+    const photo = url.searchParams.get('photo');
+    const name = url.searchParams.get('name');
+    if(noSuchUser(userID)) {
+        const newUser ={
+            ws,
+            chatID,
+            userID,
+            photo,
+            name,
+        }
+        users.push(newUser);
+        sendToAll(chatID, {message:'lm319', users:getChatUsers(chatID)});
+    }
 
     console.log('connected', chatID, userID  );
     let currentUser = null;
@@ -64,35 +71,15 @@ server.on('connection', (ws, req) => {
     }
     ping = setInterval(sendPing, 5000);
 
-    
+    ws.on('close', () => {
+        console.log('closed');
+        removeUser(data.userID);
+        //killTimeout = setTimeout(removeUser, 10000, data.userID);
+    })
 
     ws.on('message', message => {
         const data = JSON.parse(message);
-        if(data.message === 'lm318') {
-            if(noSuchUser(data.userID)) {
-                currentUser = data.userID;
-                console.log('chat id:', data.chatID);
-                console.log('new user:', currentUser );
-                const newUser ={
-                    ws,
-                    chatID:data.chatID,
-                    userID:data.userID,
-                    photo:data.photo,
-                    name:data.name,
-                }
-                users.push(newUser);
-                
-                sendToAll(data.chatID, {message:'lm319', users:getChatUsers(data.chatID)});}
-            }
-        else {
-            console.log("got message:", data.message);
-            sendToAll(data.chatID, {message:data.message, userID:data.userID, messID:sr()});
-        }
-
-        ws.on('close', () => {
-            console.log('closed');
-            removeUser(data.userID);
-            //killTimeout = setTimeout(removeUser, 10000, data.userID);
-        })
+        console.log("got message:", data.message);
+        sendToAll(chatID, {message:data.message, userID, messID:sr()});
     })
 })
