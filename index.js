@@ -76,6 +76,6 @@ server.on('connection', (ws) => {
                 
                 sendToAll(data.cahtID, {message:'lm319', users:getChatUsers(data.cahtID)});}
             }
-        else sendToAll(data.ID, {message:data.message, userID:data.userID, messID:sr()});
+        else sendToAll(data.cahtID, {message:data.message, userID:data.userID, messID:sr()});
     })
 })
