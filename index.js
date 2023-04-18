@@ -61,22 +61,22 @@ server.on('connection', (ws) => {
         if(data.message === 'lm318') {
             if(noSuchUser(data.userID)) {
                 currentUser = data.userID;
-                console.log('chat id:', data.cahtID);
+                console.log('chat id:', data.chatID);
                 console.log('new user:', currentUser );
                 const newUser ={
                     ws,
-                    chatID:data.cahtID,
+                    chatID:data.chatID,
                     userID:data.userID,
                     photo:data.photo,
                     name:data.name,
                 }
                 users.push(newUser);
                 
-                sendToAll(data.cahtID, {message:'lm319', users:getChatUsers(data.cahtID)});}
+                sendToAll(data.chatID, {message:'lm319', users:getChatUsers(data.chatID)});}
             }
         else {
             console.log("got message:", data.message);
-            sendToAll(data.cahtID, {message:data.message, userID:data.userID, messID:sr()});
+            sendToAll(data.chatID, {message:data.message, userID:data.userID, messID:sr()});
         }
 
         ws.on('close', () => {
