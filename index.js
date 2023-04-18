@@ -4,6 +4,7 @@ const PORT = process.env.PORT || 8080;
 const server = new WebSocket.Server({ port:PORT });
 const users = [];
 let killTimeout = {};
+let ping = {}
 console.log("Welcome to websocket chat server", PORT);
 
 const noSuchUser = (uid, chatID) => {
@@ -17,12 +18,17 @@ const sendToAll = (id, message) => {
 const removeUser = (currentUser) => {
     users.map(u => u.uid !== currentUser.uid && u.chatID !== currentUser.ID);
     clearTimeout(killTimeout);
+    clearInterval(ping);
     console.log('removed');
 }
 
 server.on('connection', (ws) => {
     console.log('connected');
     const currentUser = {};
+    const sendPing = () => {
+        ws.send(JSON.stringify({message:'ping'}));
+    }
+    ping = setInterval(sendPing, 5000);
 
     ws.on('close', () => {
         console.log('closed');
