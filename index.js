@@ -16,6 +16,7 @@ const sendToAll = (id, message) => {
 }
 
 const removeUser = (currentUser) => {
+    const chat = users.find(u => u.userID !== currentUser).chatID;
     users.map(u => u.userID !== currentUser);
     clearTimeout(killTimeout);
     clearInterval(ping);
@@ -27,7 +28,7 @@ const removeUser = (currentUser) => {
           name: u.name
         }
       })
-    sendToAll(data.ID, {message:'lm319', users:userlist});
+    sendToAll(chat, {message:'lm319', users:userlist});
 }
 
 server.on('connection', (ws) => {
