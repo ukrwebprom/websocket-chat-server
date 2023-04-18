@@ -8,7 +8,7 @@ let ping = {}
 console.log("Welcome to websocket chat server", PORT);
 
 const noSuchUser = (uid) => {
-    if(users.find(u => u.uid === uid) === undefined) return true;
+    if(users.find(u => u.userID === uid) === undefined) return true;
     else return false;
 }
 const sendToAll = (id, message) => {
@@ -16,7 +16,7 @@ const sendToAll = (id, message) => {
 }
 
 const removeUser = (currentUser) => {
-    users.map(u => u.uid !== currentUser);
+    users.map(u => u.userID !== currentUser);
     clearTimeout(killTimeout);
     clearInterval(ping);
     console.log('removed');
@@ -43,13 +43,13 @@ server.on('connection', (ws) => {
                 const newUser ={
                     ws,
                     chatID:data.ID,
-                    uid:data.userID,
+                    userID:data.userID,
                     photo:data.photo,
                     name:data.name,
                 }
                 users.push(newUser);
-                sendToAll(data.ID, {message:'lm319', currentID:data.userID, photo:data.photo, name:data.name});}
+                sendToAll(data.ID, {message:'lm319', userID:data.userID, photo:data.photo, name:data.name});}
             }
-        else sendToAll(data.ID, {message:data.message, currentID:data.userID, messID:sr()});
+        else sendToAll(data.ID, {message:data.message, userID:data.userID, messID:sr()});
     })
 })
