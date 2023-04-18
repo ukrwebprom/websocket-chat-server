@@ -45,8 +45,18 @@ const removeUser = (zombie) => {
     sendToAll(chat, {message:'lm319', users:getChatUsers(chat)});
 }
 
-server.on('connection', (ws) => {
-    console.log('connected');
+server.on('connection', (ws, req) => {
+    const url = new URL(req.url, 'wss://tranquil-reaches-58824.herokuapp.com/');
+    const chatID = url.searchParams.get('chatID');
+    const userID = url.searchParams.get('userID');
+/*     const user = {
+      ws,
+      name,
+      id,
+      isOnline:true
+    } */
+
+    console.log('connected', chatID, userID  );
     let currentUser = null;
 
     const sendPing = () => {
