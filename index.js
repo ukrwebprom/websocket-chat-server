@@ -16,7 +16,7 @@ const sendToAll = (id, message) => {
 }
 
 const removeUser = (currentUser) => {
-    const chat = users.find(u => u.userID !== currentUser).chatID;
+    const chat = users.find(u => u.userID === currentUser).chatID;
     users.map(u => u.userID !== currentUser);
     clearTimeout(killTimeout);
     clearInterval(ping);
