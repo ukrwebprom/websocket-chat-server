@@ -15,9 +15,10 @@ const sendToAll = (id, message) => {
     users.filter(u => u.chatID === id).forEach(e => {e.ws.send(JSON.stringify(message))});
 }
 
-const removeUser = (currentUser) => {
-    const chat = users.find(u => u.userID === currentUser).chatID;
-    users.map(u => u.userID !== currentUser);
+const removeUser = (zombie) => {
+    console.log('zombie:', zombie);
+    const chat = users.find(u => u.userID === zombie).chatID;
+    users.map(u => u.userID !== zombie);
     clearTimeout(killTimeout);
     clearInterval(ping);
     console.log('removed');
