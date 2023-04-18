@@ -16,13 +16,15 @@ const sendToAll = (id, message) => {
     users.filter(u => u.chatID === id).forEach(e => {e.ws.send(JSON.stringify(message))});
 }
 const getChatUsers = (chatID) => {
-    return users.filter(u => u.chatID === chatID).map(u => {
+    const usersList = users.filter(u => u.chatID === chatID).map(u => {
         return {
             userID: u.userID, 
             photo: u.photo, 
             name: u.name
           }
     })
+    console.log(usersList);
+    return usersList;
 }
 
 const removeUser = (zombie) => {
