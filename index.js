@@ -5,7 +5,7 @@ const server = new WebSocket.Server({ port:PORT });
 let users = [];
 let killTimeout = {};
 let ping = {}
-let currentUser = null;
+
 console.log("Welcome to websocket chat server", PORT);
 
 const noSuchUser = (uid) => {
@@ -47,6 +47,7 @@ const removeUser = (zombie) => {
 
 server.on('connection', (ws) => {
     console.log('connected');
+    let currentUser = null;
     
     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
