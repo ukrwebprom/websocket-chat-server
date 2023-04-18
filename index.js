@@ -51,6 +51,7 @@ server.on('connection', (ws, req) => {
     const userID = url.searchParams.get('userID');
     const photo = url.searchParams.get('photo');
     const name = url.searchParams.get('name');
+    console.log('connected', chatID, userID  );
     if(noSuchUser(userID)) {
         const newUser ={
             ws,
@@ -63,7 +64,7 @@ server.on('connection', (ws, req) => {
         sendToAll(chatID, {message:'lm319', users:getChatUsers(chatID)});
     }
 
-    console.log('connected', chatID, userID  );
+    
 
     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
@@ -72,7 +73,7 @@ server.on('connection', (ws, req) => {
 
     ws.on('close', () => {
         console.log('closed');
-        removeUser(data.userID);
+        removeUser(userID);
         //killTimeout = setTimeout(removeUser, 10000, data.userID);
     })
 
