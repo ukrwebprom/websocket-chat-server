@@ -30,7 +30,8 @@ const getChatUsers = (chatID) => {
 const removeUser = (zombie) => {
     console.log('zombie:', zombie);
     const chat = users.find(u => u.userID === zombie).chatID;
-    users.map(u => u.userID !== zombie);
+    const cleared = users.map(u => u.userID !== zombie);
+    users = [...cleared];
     clearTimeout(killTimeout);
     clearInterval(ping);
     console.log('removed');
