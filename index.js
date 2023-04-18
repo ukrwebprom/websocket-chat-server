@@ -51,6 +51,7 @@ server.on('connection', (ws) => {
         if(data.message === 'lm318') {
             if(noSuchUser(data.userID)) {
                 currentUser = data.userID;
+                console.log('chat id:', data.ID);
                 console.log('new user:', currentUser );
                 const newUser ={
                     ws,
