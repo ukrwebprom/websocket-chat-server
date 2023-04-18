@@ -48,7 +48,14 @@ server.on('connection', (ws) => {
                     name:data.name,
                 }
                 users.push(newUser);
-                sendToAll(data.ID, {message:'lm319', users:users});}
+                const userlist = users.map(u => {
+                    return {
+                      userID: u.userID, 
+                      photo: u.photo, 
+                      name: u.name
+                    }
+                  })
+                sendToAll(data.ID, {message:'lm319', users:userlist});}
             }
         else sendToAll(data.ID, {message:data.message, userID:data.userID, messID:sr()});
     })
