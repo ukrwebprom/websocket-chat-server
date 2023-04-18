@@ -20,6 +20,14 @@ const removeUser = (currentUser) => {
     clearTimeout(killTimeout);
     clearInterval(ping);
     console.log('removed');
+    const userlist = users.map(u => {
+        return {
+          userID: u.userID, 
+          photo: u.photo, 
+          name: u.name
+        }
+      })
+    sendToAll(data.ID, {message:'lm319', users:userlist});
 }
 
 server.on('connection', (ws) => {
@@ -40,6 +48,7 @@ server.on('connection', (ws) => {
         if(data.message === 'lm318') {
             if(noSuchUser(data.userID)) {
                 currentUser = data.userID;
+                console.log('new user:', currentUser );
                 const newUser ={
                     ws,
                     chatID:data.ID,
