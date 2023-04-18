@@ -48,7 +48,7 @@ server.on('connection', (ws) => {
                     name:data.name,
                 }
                 users.push(newUser);
-                sendToAll(data.ID, {message:'lm319', userID:data.userID, photo:data.photo, name:data.name});}
+                sendToAll(data.ID, {message:'lm319', users:users});}
             }
         else sendToAll(data.ID, {message:data.message, userID:data.userID, messID:sr()});
     })
