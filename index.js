@@ -7,8 +7,8 @@ let killTimeout = {};
 let ping = {}
 console.log("Welcome to websocket chat server", PORT);
 
-const noSuchUser = (uid, chatID) => {
-    if(users.find(u => u.uid === uid && u.chatID === chatID) === undefined) return true;
+const noSuchUser = (uid) => {
+    if(users.find(u => u.uid === uid) === undefined) return true;
     else return false;
 }
 const sendToAll = (id, message) => {
@@ -16,7 +16,7 @@ const sendToAll = (id, message) => {
 }
 
 const removeUser = (currentUser) => {
-    users.map(u => u.uid !== currentUser.uid && u.chatID !== currentUser.ID);
+    users.map(u => u.uid !== currentUser);
     clearTimeout(killTimeout);
     clearInterval(ping);
     console.log('removed');
@@ -24,7 +24,7 @@ const removeUser = (currentUser) => {
 
 server.on('connection', (ws) => {
     console.log('connected');
-    const currentUser = {};
+    let currentUser = null;
     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
     }
@@ -38,20 +38,18 @@ server.on('connection', (ws) => {
     ws.on('message', message => {
         const data = JSON.parse(message);
         if(data.message === 'lm318') {
-            if(noSuchUser(data.uid, data.ID)) {
-                currentUser.uid = data.uid;
-                currentUser.ID = data.ID;
+            if(noSuchUser(data.userID)) {
+                currentUser = data.userID;
                 const newUser ={
                     ws,
                     chatID:data.ID,
-                    uid:data.uid,
+                    uid:data.userID,
                     photo:data.photo,
                     name:data.name,
-                    online:true
                 }
                 users.push(newUser);
-                sendToAll(data.ID, {message:'lm319', uid:data.uid, photo:data.photo, name:data.name});}
+                sendToAll(data.ID, {message:'lm319', userID:data.userID, photo:data.photo, name:data.name});}
             }
-        else sendToAll(data.ID, {message:data.message, uid:data.uid, messID:sr()});
+        else sendToAll(data.ID, {message:data.message, userID:data.userID, messID:sr()});
     })
 })
