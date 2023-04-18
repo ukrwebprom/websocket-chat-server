@@ -51,11 +51,11 @@ server.on('connection', (ws) => {
         if(data.message === 'lm318') {
             if(noSuchUser(data.userID)) {
                 currentUser = data.userID;
-                console.log('chat id:', data.cahtID:);
+                console.log('chat id:', data.cahtID);
                 console.log('new user:', currentUser );
                 const newUser ={
                     ws,
-                    chatID:data.cahtID:,
+                    chatID:data.cahtID,
                     userID:data.userID,
                     photo:data.photo,
                     name:data.name,
