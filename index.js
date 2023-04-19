@@ -29,19 +29,21 @@ const getChatUsers = (chatID) => {
 
 const removeUser = (zombie) => {
     console.log('zombie:', zombie);
-    for( var i = 0; i < users.length; i++){ 
-                                   
-        if ( users[i].userID === zombie) { 
-            users.splice(i, 1); 
-            break;
+    const zombieObject = users.find(u => u.userID === zombie);
+    if(typeof zombieObject !== 'undefined') {
+        const chat = zombieObject.chatID;
+        for( var i = 0; i < users.length; i++){ 
+                                       
+            if ( users[i].userID === zombie) { 
+                users.splice(i, 1); 
+                break;
+            }
         }
+        console.log('removed');
+        
+        sendToAll(chat, {message:'lm319', users:getChatUsers(chat)});
     }
-
-    clearTimeout(killTimeout);
-    clearInterval(ping);
-    console.log('removed');
     
-    sendToAll(chat, {message:'lm319', users:getChatUsers(chat)});
 }
 
 server.on('connection', (ws, req) => {
