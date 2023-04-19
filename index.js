@@ -29,7 +29,6 @@ const getChatUsers = (chatID) => {
 
 const removeUser = (zombie) => {
     console.log('zombie:', zombie);
-    const chat = users.find(u => u.userID === zombie).chatID;
     for( var i = 0; i < users.length; i++){ 
                                    
         if ( users[i].userID === zombie) { 
