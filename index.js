@@ -13,7 +13,9 @@ const noSuchUser = (uid) => {
     else return false;
 }
 const sendToAll = (id, message) => {
-    users.filter(u => u.chatID === id).forEach(e => {e.ws.send(JSON.stringify(message))});
+    users.filter(u => u.chatID === id).forEach(e => {
+        console.log('send');
+        e.ws.send(JSON.stringify(message))});
 }
 const getChatUsers = (chatID) => {
     const usersList = users.filter(u => u.chatID === chatID).map(u => {
