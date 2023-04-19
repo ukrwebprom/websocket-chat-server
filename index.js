@@ -75,6 +75,7 @@ server.on('connection', (ws, req) => {
     ws.on('close', () => {
         console.log('closed');
         removeUser(userID);
+        clearInterval(ping);
         //killTimeout = setTimeout(removeUser, 10000, data.userID);
     })
 
