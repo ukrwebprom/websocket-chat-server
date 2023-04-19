@@ -80,7 +80,7 @@ server.on('connection', (ws, req) => {
 
     ws.on('message', message => {
         const data = JSON.parse(message);
-        console.log("got message:", data.message);
+        console.log("got message:", data.message, "chatID:", chatID);
         sendToAll(chatID, {message:data.message, userID, messID:sr()});
     })
 })
