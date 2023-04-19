@@ -69,6 +69,7 @@ server.on('connection', (ws, req) => {
     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
     }
+    sendPing();
     ping = setInterval(sendPing, 5000);
 
     ws.on('close', () => {
