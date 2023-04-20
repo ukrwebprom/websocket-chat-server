@@ -70,16 +70,16 @@ server.on('connection', (ws, req) => {
 
     sendToAll(chatID, {message:'lm319', users:getChatUsers(chatID)});
 
-    const sendPing = () => {
+/*     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
     }
     sendPing();
-    ping = setInterval(sendPing, 5000);
+    ping = setInterval(sendPing, 5000); */
 
     ws.on('close', () => {
         console.log('closed');
         removeUser(userID);
-        clearInterval(ping);
+/*         clearInterval(ping); */
         //killTimeout = setTimeout(removeUser, 10000, data.userID);
     })
 
