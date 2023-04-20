@@ -64,10 +64,10 @@ server.on('connection', (ws, req) => {
             name,
         }
         users.push(newUser);
-        sendToAll(chatID, {message:'lm319', users:getChatUsers(chatID)});
+        
     }
 
-    
+    sendToAll(chatID, {message:'lm319', users:getChatUsers(chatID)});
 
     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
