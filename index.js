@@ -55,7 +55,7 @@ server.on('connection', (ws, req) => {
     const photo = url.searchParams.get('photo');
     const name = url.searchParams.get('name');
     console.log('connected', chatID, userID  );
-/*     if(noSuchUser(userID)) {
+    if(noSuchUser(userID)) {
         const newUser ={
             ws,
             chatID,
@@ -65,7 +65,9 @@ server.on('connection', (ws, req) => {
         }
         users.push(newUser);
         
-    } */
+    } else {
+        users.find(u => u.userID === userID).ws = ws;
+    }
     const newUser ={
         ws,
         chatID,
@@ -73,7 +75,7 @@ server.on('connection', (ws, req) => {
         photo,
         name,
     }
-    users.push(newUser);
+
     sendToAll(chatID, {message:'lm319', users:getChatUsers(chatID)});
 
     const sendPing = () => {
