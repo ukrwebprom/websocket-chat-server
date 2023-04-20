@@ -55,28 +55,6 @@ server.on('connection', (ws, req) => {
     const photo = url.searchParams.get('photo');
     const name = url.searchParams.get('name');
     console.log('connected', chatID, userID  );
-    if(noSuchUser(userID)) {
-        const newUser ={
-            ws,
-            chatID,
-            userID,
-            photo,
-            name,
-        }
-        users.push(newUser);
-        
-    } else {
-        users.find(u => u.userID === userID).ws = ws;
-    }
-    const newUser ={
-        ws,
-        chatID,
-        userID,
-        photo,
-        name,
-    }
-
-    sendToAll(chatID, {message:'lm319', users:getChatUsers(chatID)});
 
     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
@@ -94,6 +72,17 @@ server.on('connection', (ws, req) => {
     ws.on('message', message => {
         const data = JSON.parse(message);
         console.log("got message:", data.message, "chatID:", chatID);
-        if(data.message !== 'ping') sendToAll(chatID, {message:data.message, userID, messID:sr()});
+        if(data.message === 'intro') {
+            const newUser ={
+                ws,
+                chatID:data.chatID,
+                userID:data.userID,
+                photo:data.photo,
+                name:data.name,
+            }
+            users.push(newUser);
+            sendToAll(data.chatID, {message:'lm319', users:getChatUsers(data.chatID)});
+            
+        } else sendToAll(chatID, {message:data.message, userID, messID:sr()});
     })
 })
