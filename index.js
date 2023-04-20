@@ -68,15 +68,8 @@ server.on('connection', (ws, req) => {
     } else {
         users.find(u => u.userID === userID).ws = ws;
     }
-    const newUser ={
-        ws,
-        chatID,
-        userID,
-        photo,
-        name,
-    }
-
-    sendToAll(chatID, {message:'lm319', users:getChatUsers(chatID)});
+    const userList = getChatUsers(chatID);
+    sendToAll(chatID, {message:'lm319', users:userList});
 
     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
@@ -88,7 +81,6 @@ server.on('connection', (ws, req) => {
         console.log('closed');
         removeUser(userID);
         clearInterval(ping);
-        //killTimeout = setTimeout(removeUser, 10000, data.userID);
     })
 
     ws.on('message', message => {
