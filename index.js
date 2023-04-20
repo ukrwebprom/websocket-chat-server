@@ -14,7 +14,7 @@ const noSuchUser = (uid) => {
 }
 const sendToAll = (id, message) => {
     users.filter(u => u.chatID === id).forEach(e => {
-        console.log('send', e);
+        console.log('send');
         e.ws.send(JSON.stringify(message))});
 }
 const getChatUsers = (chatID) => {
@@ -55,7 +55,7 @@ server.on('connection', (ws, req) => {
     const photo = url.searchParams.get('photo');
     const name = url.searchParams.get('name');
     console.log('connected', chatID, userID  );
-    if(noSuchUser(userID)) {
+/*     if(noSuchUser(userID)) {
         const newUser ={
             ws,
             chatID,
@@ -65,8 +65,15 @@ server.on('connection', (ws, req) => {
         }
         users.push(newUser);
         
+    } */
+    const newUser ={
+        ws,
+        chatID,
+        userID,
+        photo,
+        name,
     }
-
+    users.push(newUser);
     sendToAll(chatID, {message:'lm319', users:getChatUsers(chatID)});
 
     const sendPing = () => {
