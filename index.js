@@ -32,7 +32,7 @@ const getChatUsers = (chatID) => {
 const removeUser = (zombie) => {
     console.log('zombie:', zombie);
     const zombieObject = users.find(u => u.userID === zombie);
-    console.log('zombie object', zombieObject);
+    console.log('zombie object', zombieObject.chatID);
     if(typeof zombieObject !== 'undefined') {
         const chat = zombieObject.chatID;
         for( var i = 0; i < users.length; i++){ 
