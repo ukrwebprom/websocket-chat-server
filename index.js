@@ -48,13 +48,7 @@ const removeUser = (zombie) => {
     
 }
 
-server.on('connection', (ws, req) => {
-    const url = new URL(req.url, 'wss://tranquil-reaches-58824.herokuapp.com/');
-    const chatID = url.searchParams.get('chatID');
-    const userID = url.searchParams.get('userID');
-    const photo = url.searchParams.get('photo');
-    const name = url.searchParams.get('name');
-    console.log('connected', chatID, userID  );
+server.on('connection', (ws) => {
 
     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
@@ -66,7 +60,6 @@ server.on('connection', (ws, req) => {
         console.log('closed');
         removeUser(userID);
         clearInterval(ping);
-        //killTimeout = setTimeout(removeUser, 10000, data.userID);
     })
 
     ws.on('message', message => {
