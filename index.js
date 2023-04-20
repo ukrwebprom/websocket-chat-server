@@ -55,14 +55,17 @@ server.on('connection', (ws, req) => {
     const photo = url.searchParams.get('photo');
     const name = url.searchParams.get('name');
     console.log('connected', chatID, userID  );
-    const newUser ={
+    if(noSuchUser(userID)) {
+        const newUser ={
             ws,
             chatID,
             userID,
             photo,
             name,
         }
-    users.push(newUser);
+        users.push(newUser);
+        
+    }
     const userList = getChatUsers(chatID);
     sendToAll(chatID, {message:'lm319', users:userList});
 
