@@ -74,6 +74,7 @@ server.on('connection', (ws) => {
                 name:data.name,
             }
             users.push(newUser);
+            console.log(users);
             sendToAll(data.chatID, {message:'lm319', users:getChatUsers(data.chatID)});
             
         } else sendToAll(chatID, {message:data.message, userID, messID:sr()});
