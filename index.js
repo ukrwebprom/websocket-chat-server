@@ -1,8 +1,23 @@
-const WebSocket = require('ws');
-const http = require('http');
+const express = require('express')
+const http = require('http')
+const WebSocket = require('ws')
+
+const port = process.env.PORT || 8080
+const app = express()
+const httpServer = http.createServer(app)
+const server = new WebSocket.Server({
+    'server': httpServer
+})
+httpServer.listen(port)
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+  })
+  
+/* const WebSocket = require('ws');
+const http = require('http'); */
 var sr = require('simple-random');
-const PORT = process.env.PORT || 8080;
-const server = new WebSocket.Server({ port:PORT });
+/* const PORT = process.env.PORT || 8080;
+const server = new WebSocket.Server({ port:PORT }); */
 
 let users = [];
 const chats = [];
@@ -10,7 +25,7 @@ let ping = {}
 
 console.log("Welcome to websocket chat server", PORT);
 
-const requestListener = (req, res) => {
+/* const requestListener = (req, res) => {
     console.log(req);
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -22,7 +37,7 @@ const requestListener = (req, res) => {
 }
 const httpServer = http.createServer(requestListener).listen('http//tranquil-reaches-58824.herokuapp.com/', PORT, 
     () => {console.log('hhtp server is running')}
-);
+); */
 const noSuchUser = (hash) => {
     if(users.find(u => u.Hash === hash) === undefined) return true;
     else return false;
