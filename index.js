@@ -20,7 +20,9 @@ const requestListener = (req, res) => {
     res.setHeader("Content-Type", "application/json"); 
     res.end('Hello World from Node.js HTTP Server');
 }
-const httpServer = http.createServer(requestListener).listen(8000);
+const httpServer = http.createServer(requestListener).listen('http//tranquil-reaches-58824.herokuapp.com/', 8000, 
+    () => {console.log('hhtp server is running')}
+);
 const noSuchUser = (hash) => {
     if(users.find(u => u.Hash === hash) === undefined) return true;
     else return false;
