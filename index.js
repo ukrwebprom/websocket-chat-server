@@ -1,13 +1,20 @@
 const WebSocket = require('ws');
+const http = require('http');
 var sr = require('simple-random');
 const PORT = process.env.PORT || 8080;
 const server = new WebSocket.Server({ port:PORT });
+
 let users = [];
 const chats = [];
 let ping = {}
 
 console.log("Welcome to websocket chat server", PORT);
 
+const requestListener = (req, res) => {
+    res.writeHead(200);
+    res.end('Hello World from Node.js HTTP Server');
+}
+const httpServer = http.createServer(requestListener).listen(8000);
 const noSuchUser = (hash) => {
     if(users.find(u => u.Hash === hash) === undefined) return true;
     else return false;
@@ -75,7 +82,7 @@ server.on('connection', (ws, req) => {
         const mode = data.mode;
         console.log("got message:", mode);
         switch (mode) {
-            case 0:
+            case 0: //create new chat
                 chats.push({id: data.data});
                 console.log("new chat", chats);
 
