@@ -77,20 +77,17 @@ const removeUser = (zombie) => {
 }
 
 server.on('connection', (ws, req) => {
-    const url = new URL(req.url, 'wss://tranquil-reaches-58824.herokuapp.com/');
+/*     const url = new URL(req.url, 'wss://tranquil-reaches-58824.herokuapp.com/');
     const Hash = url.searchParams.get('Hash');
     console.log('connected', Hash  );
     if(noSuchUser(Hash)) users.push({ws, Hash});
-
-/*     const userList = getChatUsers(chatID);
-    sendToAll(chatID, {message:'lm319', users:userList}); */
 
     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
     }
     sendPing();
 
-    ping = setInterval(sendPing, 5000);
+    ping = setInterval(sendPing, 5000); */
 
     ws.on('close', () => {
         console.log('closed');
