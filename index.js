@@ -12,6 +12,7 @@ console.log("Welcome to websocket chat server", PORT);
 
 const requestListener = (req, res) => {
     console.log(req);
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.writeHead(200);
     res.setHeader("Content-Type", "application/json"); 
     res.end('Hello World from Node.js HTTP Server');
