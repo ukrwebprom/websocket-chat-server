@@ -11,6 +11,7 @@ let ping = {}
 console.log("Welcome to websocket chat server", PORT);
 
 const requestListener = (req, res) => {
+    console.log(req);
     res.writeHead(200);
     res.end('Hello World from Node.js HTTP Server');
 }
