@@ -8,8 +8,8 @@ let ping = {}
 
 console.log("Welcome to websocket chat server", PORT);
 
-const noSuchUser = (uid) => {
-    if(users.find(u => u.userID === uid) === undefined) return true;
+const noSuchUser = (hash) => {
+    if(users.find(u => u.Hash === hash) === undefined) return true;
     else return false;
 }
 const sendToAll = (id, message) => {
@@ -31,59 +31,48 @@ const getChatUsers = (chatID) => {
 
 const removeUser = (zombie) => {
     console.log('zombie:', zombie);
-    const zombieObject = users.find(u => u.userID === zombie);
+    const zombieObject = users.find(u => u.Hash === zombie);
     if(typeof zombieObject !== 'undefined') {
-        const chat = zombieObject.chatID;
+/*         const chat = zombieObject.chatID; */
         for( var i = 0; i < users.length; i++){ 
                                        
-            if ( users[i].userID === zombie) { 
+            if ( users[i].Hash === zombie) { 
                 users.splice(i, 1); 
                 break;
             }
         }
         console.log('removed');
         
-        sendToAll(chat, {message:'lm319', users:getChatUsers(chat)});
+/*         sendToAll(chat, {message:'lm319', users:getChatUsers(chat)}); */
     }
     
 }
 
 server.on('connection', (ws, req) => {
     const url = new URL(req.url, 'wss://tranquil-reaches-58824.herokuapp.com/');
-    const chatID = url.searchParams.get('chatID');
-    const userID = url.searchParams.get('userID');
-    const photo = url.searchParams.get('photo');
-    const name = url.searchParams.get('name');
-    console.log('connected', chatID, userID  );
-    if(noSuchUser(userID)) {
-        const newUser ={
-            ws,
-            chatID,
-            userID,
-            photo,
-            name,
-        }
-        users.push(newUser);
-        
-    }
-    const userList = getChatUsers(chatID);
-    sendToAll(chatID, {message:'lm319', users:userList});
+    const Hash = url.searchParams.get('Hash');
+    console.log('connected', Hash  );
+    if(noSuchUser(Hash)) users.push({ws, Hash});
+
+/*     const userList = getChatUsers(chatID);
+    sendToAll(chatID, {message:'lm319', users:userList}); */
 
     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
     }
     sendPing();
+
     ping = setInterval(sendPing, 5000);
 
     ws.on('close', () => {
         console.log('closed');
-        removeUser(userID);
+        removeUser(Hash);
         clearInterval(ping);
     })
 
     ws.on('message', message => {
         const data = JSON.parse(message);
-        console.log("got message:", data.message, "chatID:", chatID);
-        sendToAll(chatID, {message:data.message, userID, messID:sr()});
+        console.log("got message:", data.message);
+/*         sendToAll(chatID, {message:data.message, userID, messID:sr()}); */
     })
 })
