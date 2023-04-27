@@ -1,18 +1,18 @@
 const express = require('express')
 const http = require('http')
 const WebSocket = require('ws')
-
 const port = process.env.PORT || 8080
 const app = express()
-const httpServer = http.createServer(app)
-const server = new WebSocket.Server({
-    'server': httpServer
+
+const server = new WebSocket({
+    'server': app
 })
-httpServer.listen(port)
+
 app.get('/', (req, res) => {
     res.send('Hello World!')
   })
-  
+app.listen(port, () => {console.log('listening')})
+
 /* const WebSocket = require('ws');
 const http = require('http'); */
 var sr = require('simple-random');
@@ -29,8 +29,8 @@ console.log("Welcome to websocket chat server", PORT);
     console.log(req);
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-/*     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', true); */
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.writeHead(200);
     res.setHeader("Content-Type", "application/json"); 
     res.end('Hello World from Node.js HTTP Server');
