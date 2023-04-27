@@ -3,7 +3,7 @@ var sr = require('simple-random');
 const PORT = process.env.PORT || 8080;
 const server = new WebSocket.Server({ port:PORT });
 let users = [];
-let killTimeout = {};
+const chats = [];
 let ping = {}
 
 console.log("Welcome to websocket chat server", PORT);
@@ -72,7 +72,14 @@ server.on('connection', (ws, req) => {
 
     ws.on('message', message => {
         const data = JSON.parse(message);
-        console.log("got message:", data.message);
+        const mode = data.mode;
+        console.log("got message:", mode);
+        switch (mode) {
+            case 0:
+                chats.push({id: data.data});
+                console.log("new chat", chats);
+
+        }
 /*         sendToAll(chatID, {message:data.message, userID, messID:sr()}); */
     })
 })
