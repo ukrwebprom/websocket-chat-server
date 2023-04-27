@@ -13,6 +13,7 @@ console.log("Welcome to websocket chat server", PORT);
 const requestListener = (req, res) => {
     console.log(req);
     res.writeHead(200);
+    res.setHeader("Content-Type", "application/json"); 
     res.end('Hello World from Node.js HTTP Server');
 }
 const httpServer = http.createServer(requestListener).listen(8000);
