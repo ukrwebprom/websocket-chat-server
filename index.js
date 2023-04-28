@@ -18,7 +18,7 @@ const server = new WebSocketServer.WebSocketServer({server: httpServer});
 app.get('/chat', (req, res) => {
     const chat = chats.find(c => c.id === req.query.id);
     if(chat) res.send(chat.users);
-    else throw new Error('NO SUCH CHAT');
+    else res.send(null);
   })
 
 app.post('/chat', (req, res) =>{
