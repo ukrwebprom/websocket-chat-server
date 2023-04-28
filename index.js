@@ -4,13 +4,18 @@ const WebSocketServer = require('ws')
 const port = process.env.PORT || 8080
 const app = express()
 
-/* const wsListener = (data) => {
-    console.log(data);
-} */
+
 const httpServer = http.createServer(app);
 const server = new WebSocketServer.WebSocketServer({server: httpServer});
 
 app.get('/', (req, res) => {
+    console.log(req);
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.writeHead(200);
+    res.setHeader("Content-Type", "application/json");
     res.send('Hello World!')
   })
 httpServer.listen(port, () => {console.log('listening')})
@@ -80,7 +85,7 @@ const removeUser = (zombie) => {
 }
 
 server.on('connection', (ws, req) => {
-/*     const url = new URL(req.url, 'wss://tranquil-reaches-58824.herokuapp.com/');
+    const url = new URL(req.url, 'wss://tranquil-reaches-58824.herokuapp.com/');
     const Hash = url.searchParams.get('Hash');
     console.log('connected', Hash  );
     if(noSuchUser(Hash)) users.push({ws, Hash});
@@ -90,7 +95,7 @@ server.on('connection', (ws, req) => {
     }
     sendPing();
 
-    ping = setInterval(sendPing, 5000); */
+    ping = setInterval(sendPing, 5000);
 
     ws.on('close', () => {
         console.log('closed');
