@@ -21,10 +21,11 @@ app.get('/chat', (req, res) => {
   })
 
 app.post('/chat', (req, res) =>{
-    const chat = chats.find(c => c.id === req.query.id);
+    const chatID = req.query.id;
+    const chat = chats.find(c => c.id === chatID);
     if(!chat) {
-        chats.push({id:req.query.id});
-        res.send(chats[chats.length-1]);
+        const n = chats.push({id:chatID});
+        res.send(chats[n-1]);
     }
     else throw new Error('CHAT IS EXIST');
 })
