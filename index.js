@@ -24,7 +24,7 @@ app.post('/chat', (req, res) =>{
     const chat = chats.find(c => c.id === req.query);
     if(!chat) {
         chats.push({id:req.query});
-        res.send(chat.id);
+        res.send(chats[chats.length-1]);
     }
     else throw new Error('CHAT IS EXIST');
 })
