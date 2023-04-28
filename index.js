@@ -5,6 +5,7 @@ const WebSocketServer = require('ws');
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(cors());
+app.use(express.json());
 var sr = require('simple-random');
 
 let users = [];
@@ -21,7 +22,7 @@ app.get('/chat', (req, res) => {
   })
 
 app.post('/chat', (req, res) =>{
-    const chatID = req;
+    const chatID = req.body;
     console.log("params:", chatID);
 /*     const chat = chats.find(c => c.id === chatID);
     if(!chat) {
