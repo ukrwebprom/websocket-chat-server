@@ -1,10 +1,10 @@
 const express = require('express')
 const http = require('http')
-const WebSocket = require('ws')
+const WebSocketServer = require('ws')
 const port = process.env.PORT || 8080
 const app = express()
 
-const server = new WebSocket({server: app});
+const server = new WebSocketServer.WebSocketServer({server: app});
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
@@ -21,7 +21,7 @@ let users = [];
 const chats = [];
 let ping = {}
 
-console.log("Welcome to websocket chat server", PORT);
+console.log("Welcome to websocket chat server", port);
 
 /* const requestListener = (req, res) => {
     console.log(req);
