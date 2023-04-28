@@ -23,7 +23,7 @@ app.get('/chat', (req, res) => {
 app.post('/chat', (req, res) =>{
     const chat = chats.find(c => c.id === req.query);
     if(!chat) {
-        chat.push({id:req.query});
+        chats.push({id:req.query});
         res.send(chat.id);
     }
     else throw new Error('CHAT IS EXIST');
