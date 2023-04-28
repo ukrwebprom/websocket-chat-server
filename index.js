@@ -15,14 +15,13 @@ const httpServer = http.createServer(app);
 const server = new WebSocketServer.WebSocketServer({server: httpServer});
 
 app.get('/chat', (req, res) => {
-    console.log(req.query);
-    const chat = chats.find(c => c.id === req.query);
+    const chat = chats.find(c => c.id === req.query.id);
     if(chat) res.send(chat.users);
     else throw new Error('NO SUCH CHAT');
   })
 
 app.post('/chat', (req, res) =>{
-    const chat = chats.find(c => c.id === req.query);
+    const chat = chats.find(c => c.id === req.query.id);
     if(!chat) {
         chats.push({id:req.query});
         res.send(chats[chats.length-1]);
