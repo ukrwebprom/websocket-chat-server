@@ -9,7 +9,7 @@ app.use(cors());
 const httpServer = http.createServer(app);
 const server = new WebSocketServer.WebSocketServer({server: httpServer});
 
-app.get('/', (req, res) => {
+app.get('/isexist', (req, res) => {
     console.log(req);
     res.send('Hello World!')
   })
