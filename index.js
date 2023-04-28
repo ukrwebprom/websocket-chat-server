@@ -5,40 +5,32 @@ const WebSocketServer = require('ws');
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(cors());
-
-const httpServer = http.createServer(app);
-const server = new WebSocketServer.WebSocketServer({server: httpServer});
-
-app.get('/isexist', (req, res) => {
-    console.log('check chat by id:', req.query);
-    res.send('Hello World!')
-  })
-httpServer.listen(port, () => {console.log('listening')})
-
-/* const WebSocket = require('ws');
-const http = require('http'); */
 var sr = require('simple-random');
-/* const PORT = process.env.PORT || 8080;
-const server = new WebSocket.Server({ port:PORT }); */
 
 let users = [];
 const chats = [];
 let ping = {}
 
+const httpServer = http.createServer(app);
+const server = new WebSocketServer.WebSocketServer({server: httpServer});
 
-/* const requestListener = (req, res) => {
-    console.log(req);
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.writeHead(200);
-    res.setHeader("Content-Type", "application/json"); 
-    res.end('Hello World from Node.js HTTP Server');
-}
-const httpServer = http.createServer(requestListener).listen('http//tranquil-reaches-58824.herokuapp.com/', PORT, 
-    () => {console.log('hhtp server is running')}
-); */
+app.get('/chat', (req, res) => {
+    const chat = chats.find(c => c.id === req.query);
+    if(chat) res.send(chat.users);
+    else throw new Error('NO SUCH CHAT');
+  })
+
+app.post('/chat', (req, res) =>{
+    const chat = chats.find(c => c.id === req.query);
+    if(!chat) {
+        chat.push({id:req.query});
+        res.send(chat.id);
+    }
+    else throw new Error('CHAT IS EXIST');
+})
+
+httpServer.listen(port, () => {console.log('listening')})
+
 const noSuchUser = (hash) => {
     if(users.find(u => u.Hash === hash) === undefined) return true;
     else return false;
