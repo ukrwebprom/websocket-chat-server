@@ -10,7 +10,7 @@ const httpServer = http.createServer(app);
 const server = new WebSocketServer.WebSocketServer({server: httpServer});
 
 app.get('/isexist', (req, res) => {
-    console.log('check chat by id:', req.params.id);
+    console.log('check chat by id:', req.query);
     res.send('Hello World!')
   })
 httpServer.listen(port, () => {console.log('listening')})
