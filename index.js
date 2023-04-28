@@ -7,13 +7,13 @@ const app = express()
 const wsListener = (data) => {
     console.log(data);
 }
-
-const server = new WebSocketServer.WebSocketServer({server: app}, wsListener);
+const httpServer = http.createServer(app);
+const server = new WebSocketServer.WebSocketServer({server: httpServer}, wsListener);
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
   })
-app.listen(port, () => {console.log('listening')})
+  httpServer.listen(port, () => {console.log('listening')})
 
 /* const WebSocket = require('ws');
 const http = require('http'); */
