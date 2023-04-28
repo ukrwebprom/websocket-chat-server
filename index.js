@@ -4,7 +4,11 @@ const WebSocketServer = require('ws')
 const port = process.env.PORT || 8080
 const app = express()
 
-const server = new WebSocketServer.WebSocketServer({server: app});
+const wsListener = (data) => {
+    console.log(data);
+}
+
+const server = new WebSocketServer.WebSocketServer({server: app}, wsListener);
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
