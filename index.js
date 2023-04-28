@@ -22,7 +22,7 @@ app.get('/chat', (req, res) => {
 
 app.post('/chat', (req, res) =>{
     const chatID = req.params;
-    console.log(chatID);
+    console.log("params:", chatID);
 /*     const chat = chats.find(c => c.id === chatID);
     if(!chat) {
         const n = chats.push({id:chatID});
