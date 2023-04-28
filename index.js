@@ -21,13 +21,14 @@ app.get('/chat', (req, res) => {
   })
 
 app.post('/chat', (req, res) =>{
-    const chatID = req.query.id;
-    const chat = chats.find(c => c.id === chatID);
+    const chatID = req.params;
+    console.log(chatID);
+/*     const chat = chats.find(c => c.id === chatID);
     if(!chat) {
         const n = chats.push({id:chatID});
         res.send(chats[n-1]);
     }
-    else throw new Error('CHAT IS EXIST');
+    else throw new Error('CHAT IS EXIST'); */
 })
 
 httpServer.listen(port, () => {console.log('listening')})
