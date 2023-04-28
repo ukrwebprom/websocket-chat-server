@@ -22,7 +22,7 @@ app.get('/chat', (req, res) => {
   })
 
 app.post('/chat', (req, res) =>{
-    const chatID = json(req.body);
+    const chatID = req.body;
     console.log("params:", chatID);
 /*     const chat = chats.find(c => c.id === chatID);
     if(!chat) {
