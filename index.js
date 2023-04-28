@@ -11,12 +11,6 @@ const server = new WebSocketServer.WebSocketServer({server: httpServer});
 
 app.get('/', (req, res) => {
     console.log(req);
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.writeHead(200);
-    res.setHeader("Content-Type", "application/json");
     res.send('Hello World!')
   })
 httpServer.listen(port, () => {console.log('listening')})
