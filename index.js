@@ -4,16 +4,16 @@ const WebSocketServer = require('ws')
 const port = process.env.PORT || 8080
 const app = express()
 
-const wsListener = (data) => {
+/* const wsListener = (data) => {
     console.log(data);
-}
+} */
 const httpServer = http.createServer(app);
-const server = new WebSocketServer.WebSocketServer({server: httpServer}, wsListener);
+const server = new WebSocketServer.WebSocketServer({server: httpServer});
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
   })
-  httpServer.listen(port, () => {console.log('listening')})
+httpServer.listen(port, () => {console.log('listening')})
 
 /* const WebSocket = require('ws');
 const http = require('http'); */
