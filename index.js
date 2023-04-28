@@ -1,9 +1,10 @@
-const express = require('express')
-const http = require('http')
-const WebSocketServer = require('ws')
-const port = process.env.PORT || 8080
-const app = express()
-
+const express = require('express');
+var cors = require('cors');
+const http = require('http');
+const WebSocketServer = require('ws');
+const port = process.env.PORT || 8080;
+const app = express();
+app.use(cors());
 
 const httpServer = http.createServer(app);
 const server = new WebSocketServer.WebSocketServer({server: httpServer});
