@@ -26,7 +26,7 @@ app.post('/chat', (req, res) =>{
     console.log("params:", chatID);
     const chat = chats.find(c => c.id === chatID);
     if(!chat) {
-        const n = chats.push({id:chatID});
+        const n = chats.push({id:chatID, users:[]});
         res.send(chats[n-1]);
     }
     else throw new Error('CHAT IS EXIST');
