@@ -21,7 +21,7 @@ app.get('/chat', (req, res) => {
   })
 
 app.post('/chat', (req, res) =>{
-    const chatID = req.params;
+    const chatID = req;
     console.log("params:", chatID);
 /*     const chat = chats.find(c => c.id === chatID);
     if(!chat) {
