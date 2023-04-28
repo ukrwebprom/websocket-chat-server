@@ -25,7 +25,6 @@ let users = [];
 const chats = [];
 let ping = {}
 
-console.log("Welcome to websocket chat server", port);
 
 /* const requestListener = (req, res) => {
     console.log(req);
