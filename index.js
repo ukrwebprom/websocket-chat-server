@@ -99,7 +99,7 @@ server.on('connection', (ws, req) => {
     const Hash = url.searchParams.get('Hash');
     console.log('connected', Hash  );
     if(noSuchUser(Hash)) users.push({ws, Hash});
-
+    console.log('recorded', users  );
     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
     }
