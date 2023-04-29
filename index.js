@@ -45,7 +45,7 @@ app.put('/chat', (req, res) =>{
     const chat = chats.find(c => c.id === chatID);
     console.log('chat to enter:', chatID)
     if(chat) {
-        chat.users.push({hash: req.body.hash, uid:req.body.uid});
+/*         chat.users.push({hash: req.body.hash, uid:req.body.uid}); */
 /*         updateChat(chat.users); */
         res.send(chat.users);
     }
