@@ -45,7 +45,7 @@ app.put('/chat', (req, res) =>{
     const chat = chats.find(c => c.id === chatID);
     console.log('chat to enter:', chatID)
     if(chat) {
-        chat.users.push({hash: req.body.id, uid:req.body.uid});
+        chat.users.push({hash: req.body.hash, uid:req.body.uid});
         updateChat(chat.users);
         res.send(chat.users);
     }
@@ -99,7 +99,6 @@ server.on('connection', (ws, req) => {
     const Hash = url.searchParams.get('Hash');
     console.log('connected', Hash  );
     if(noSuchUser(Hash)) users.push({ws, Hash});
-    console.log('recorded', users  );
     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
     }
