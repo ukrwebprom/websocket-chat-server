@@ -8,12 +8,19 @@ app.use(cors());
 app.use(express.json());
 var sr = require('simple-random');
 
-let users = [];
+const users = [];
 const chats = [];
 let ping = {}
 
 const httpServer = http.createServer(app);
 const server = new WebSocketServer.WebSocketServer({server: httpServer});
+
+const updateChat = (receivers) => {
+    receivers.forEach(u => {
+        const res = users.find(cur => cur.Hash === u.hash);
+        if(res) res.ws.send(JSON.stringify({message:'need_upd'}));
+    })
+}
 
 app.get('/chat', (req, res) => {
     const chat = chats.find(c => c.id === req.query.id);
@@ -39,6 +46,7 @@ app.put('/chat', (req, res) =>{
     if(chat) {
         chat.users.push({hash: req.body.id, uid:req.body.uid})
         res.send(chat.users);
+        updateChat(chat.users);
     }
     else throw new Error('CHAT IS NOT EXIST');
 })
