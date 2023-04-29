@@ -35,6 +35,7 @@ app.post('/chat', (req, res) =>{
 app.put('/chat', (req, res) =>{
     const chatID = req.body.id;
     const chat = chats.find(c => c.id === chatID);
+    console.log('chat to enter:', chat)
     if(chat) {
         chat.users.push({hash: req.body.id, uid:req.body.uid})
         res.send(chat.users);
