@@ -100,6 +100,7 @@ server.on('connection', (ws, req) => {
     console.log('connected', Hash  );
     if(noSuchUser(Hash)) users.push({ws, Hash});
     const sendPing = () => {
+        console.log('ping');
         ws.send(JSON.stringify({message:'ping'}));
     }
 
