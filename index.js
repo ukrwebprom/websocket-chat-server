@@ -40,13 +40,13 @@ app.post('/chat', (req, res) =>{
     else throw new Error('CHAT IS EXIST');
 })
 
-app.patch('/chat', (req, res) =>{
+app.patch('/chat/user', (req, res) =>{
     const chatID = req.body.id;
-    //const chat = chats.find(c => c.id === chatID);
+    const chat = chats.find(c => c.id === chatID);
     console.log('chat to enter:', chatID)
     if(chat) {
-/*         chat.users.push({hash: req.body.hash, uid:req.body.uid}); */
-/*         updateChat(chat.users); */
+        chat.users.push({hash: req.body.hash, uid:req.body.uid});
+        updateChat(chat.users);
         res.send(chat.users);
     }
     else throw new Error('CHAT IS NOT EXIST');
