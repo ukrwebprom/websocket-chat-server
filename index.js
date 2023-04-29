@@ -44,9 +44,9 @@ app.put('/chat', (req, res) =>{
     const chat = chats.find(c => c.id === chatID);
     console.log('chat to enter:', chatID)
     if(chat) {
-        chat.users.push({hash: req.body.id, uid:req.body.uid})
-        res.send(chat.users);
+        chat.users.push({hash: req.body.id, uid:req.body.uid});
         updateChat(chat.users);
+        res.send(chat.users);
     }
     else throw new Error('CHAT IS NOT EXIST');
 })
