@@ -99,7 +99,7 @@ server.on('connection', (ws, req) => {
     const Hash = url.searchParams.get('Hash');
     console.log('connected', Hash  );
     if(!users.find(u => u.Hash === Hash)) users.push({ws, Hash});
-    console.log('users:', users.Hash)
+    console.log('users:', users.map(n => n.Hash))
     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
     }
