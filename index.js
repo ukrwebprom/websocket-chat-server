@@ -32,6 +32,16 @@ app.post('/chat', (req, res) =>{
     else throw new Error('CHAT IS EXIST');
 })
 
+app.put('/chat', (req, res) =>{
+    const chatID = req.body.id;
+    const chat = chats.find(c => c.id === chatID);
+    if(chat) {
+        chat.users.push({hash: req.body.id, uid:req.body.uid})
+        res.send(chat.users);
+    }
+    else throw new Error('CHAT IS NOT EXIST');
+})
+
 httpServer.listen(port, () => {console.log('listening')})
 
 const noSuchUser = (hash) => {
