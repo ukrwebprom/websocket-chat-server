@@ -19,7 +19,7 @@ const updateChat = (receivers) => {
     receivers.forEach(u => {
         const res = users.find(cur => cur.Hash === u.hash);
         console.log('receiver:', res);
-        /* if(res) res.ws.send(JSON.stringify({message:'need_upd'})); */
+        if(res) res.ws.send(JSON.stringify({message:'need_upd'}));
     })
 }
 
@@ -46,7 +46,7 @@ app.put('/chat', (req, res) =>{
     console.log('chat to enter:', chatID)
     if(chat) {
         chat.users.push({hash: req.body.hash, uid:req.body.uid});
-        updateChat(chat.users);
+/*         updateChat(chat.users); */
         res.send(chat.users);
     }
     else throw new Error('CHAT IS NOT EXIST');
