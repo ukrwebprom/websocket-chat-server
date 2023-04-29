@@ -18,6 +18,7 @@ const server = new WebSocketServer.WebSocketServer({server: httpServer});
 const updateChat = (receivers) => {
     receivers.forEach(u => {
         const res = users.find(cur => cur.Hash === u.hash);
+        console.log('receiver:', res);
         if(res) res.ws.send(JSON.stringify({message:'need_upd'}));
     })
 }
