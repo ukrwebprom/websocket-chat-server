@@ -100,7 +100,6 @@ server.on('connection', (ws, req) => {
     console.log('connected', Hash  );
     if(!users.find(u => u.Hash === Hash)) users.push({ws, Hash});
     const sendPing = () => {
-        console.log('ping');
         ws.send(JSON.stringify({message:'ping'}));
     }
 
