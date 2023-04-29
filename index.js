@@ -42,7 +42,7 @@ app.post('/chat', (req, res) =>{
 
 app.patch('/chat', (req, res) =>{
     const chatID = req.body.id;
-    const chat = chats.find(c => c.id === chatID);
+    //const chat = chats.find(c => c.id === chatID);
     console.log('chat to enter:', chatID)
     if(chat) {
 /*         chat.users.push({hash: req.body.hash, uid:req.body.uid}); */
