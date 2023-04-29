@@ -40,7 +40,7 @@ app.post('/chat', (req, res) =>{
     else throw new Error('CHAT IS EXIST');
 })
 
-app.put('/chat', (req, res) =>{
+app.patch('/chat', (req, res) =>{
     const chatID = req.body.id;
     const chat = chats.find(c => c.id === chatID);
     console.log('chat to enter:', chatID)
