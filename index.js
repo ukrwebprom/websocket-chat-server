@@ -88,7 +88,7 @@ const removeUser = (zombieHash) => {
 server.on('connection', (ws, req) => {
     const url = new URL(req.url, 'wss://tranquil-reaches-58824.herokuapp.com/');
     const Hash = url.searchParams.get('Hash');
-
+    console.log("Connected:", Hash)
     if(!users.find(u => u.Hash === Hash)) users.push({ws, Hash, chat:"", uid:""});
 
     const sendPing = () => {
@@ -107,7 +107,6 @@ server.on('connection', (ws, req) => {
         const data = JSON.parse(message);
         console.log("got message:", data);
         const chatToSend = getUserByHash(Hash).chat;
-        console.log(chatToSend);
         sendToAll(chatToSend, data);
     })
 })
