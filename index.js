@@ -46,7 +46,6 @@ app.post('/chat/user', (req, res) =>{
     if(chats.includes(chatID)) {
         getUserByHash(Hash).chat = chatID;
         getUserByHash(Hash).uid = uid;
-        sendToAll(chatID, 'need_upd');
         res.send(getChatUsers(chatID).map(u => u.uid));
     }
     else throw new Error('CHAT IS NOT EXIST');
@@ -106,14 +105,6 @@ server.on('connection', (ws, req) => {
 
     ws.on('message', message => {
         const data = JSON.parse(message);
-        const mode = data.mode;
-        console.log("got message:", mode);
-        switch (mode) {
-            case 0: //create new chat
-                chats.push({id: data.data});
-                console.log("new chat", chats);
-
-        }
-/*         sendToAll(chatID, {message:data.message, userID, messID:sr()}); */
+        sendToAll(getUserByHash(Hash).chat, data);
     })
 })
