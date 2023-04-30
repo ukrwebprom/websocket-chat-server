@@ -16,27 +16,21 @@ const httpServer = http.createServer(app);
 const server = new WebSocketServer.WebSocketServer({server: httpServer});
 
 const getUserByHash = (hash) => users.find(u => u.Hash === hash);
-const sendToAll = (chatID, message) => chats.find(c => c.id === chatID)
-.users.forEach(u => {
-    const user = getUserByHash(u.hash);
-    console.dir(user);
-    user.ws.send(JSON.stringify({message:message}))
-});
+const getChatUsers = (chat) => users.filter(u => u.chat === chat);
+const sendToAll = (chatID, message) => users.filter(u => u.chat === chatID).forEach(w => w.ws.send(JSON.stringify({message:message})));
 
 /* check if the chat exist and return chat users or null */
 app.get('/chat', (req, res) => { 
-    const chat = chats.find(c => c.id === req.query.id);
-    if(chat) res.send(JSON.stringify(chat.users));
+    const chat = req.query.id;
+    if(chats.includes(chat)) res.send(JSON.stringify(getChatUsers(chat)));
     else res.send(null);
   })
 
-/* create a new chat and put empty array of users. return new chat object */
+/* create a new chat. return new chat object */
 app.post('/chat', (req, res) =>{
     const chatID = req.body.id;
-    console.log("params:", chatID);
-    const chat = chats.find(c => c.id === chatID);
-    if(!chat) {
-        const n = chats.push({id:chatID, users:[]});
+    if(!chats.includes(chatID)) {
+        const n = chats.push(chatID);
         res.send(chats[n-1]);
         console.log("chats:", chats);
     }
@@ -48,13 +42,12 @@ app.post('/chat/user', (req, res) =>{
     const chatID = req.body.id;
     const Hash = req.body.hash;
     const uid = req.body.uid;
-    const chat = chats.find(c => c.id === chatID);
     console.log('chat to enter:', chatID)
-    if(chat) {
-        chat.users.push({hash:Hash, uid:uid});
-        console.log(chat);
+    if(chats.includes(chatID)) {
+        getUserByHash(Hash).chat = chatID;
+        getUserByHash(Hash).uid = uid;
         sendToAll(chatID, 'need_upd');
-        res.send(chat.users);
+        res.send(getChatUsers(chatID));
     }
     else throw new Error('CHAT IS NOT EXIST');
 })
@@ -90,17 +83,6 @@ const removeUser = (zombieHash) => {
             }
         }
     }
-    const chat = chats.find(c => c.users.find(u => u.hash === zombieHash));
-    if(typeof chat !== 'undefined') {
-
-        for( var i = 0; i < chat.users.length; i++){ 
-                                       
-            if ( chat.users[i].hash === zombieHash) { 
-                chat.users.splice(i, 1); 
-                break;
-            }
-        }
-    }
     console.log(chat);
     
 }
@@ -110,7 +92,7 @@ server.on('connection', (ws, req) => {
     const url = new URL(req.url, 'wss://tranquil-reaches-58824.herokuapp.com/');
     const Hash = url.searchParams.get('Hash');
 
-    if(!users.find(u => u.Hash === Hash)) users.push({ws, Hash});
+    if(!users.find(u => u.Hash === Hash)) users.push({ws, Hash, chat:none, uid:none});
 
     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
