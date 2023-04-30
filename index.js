@@ -87,6 +87,16 @@ const removeUser = (zombieHash) => {
         }
     }
     const chat = chats.find(c => c.users.find(u => u.hash === zombieHash));
+    if(typeof chat !== 'undefined') {
+
+        for( var i = 0; i < chat.users.length; i++){ 
+                                       
+            if ( chat.users[i].hash === zombieHash) { 
+                chat.users.splice(i, 1); 
+                break;
+            }
+        }
+    }
     console.log(chat);
     
 }
