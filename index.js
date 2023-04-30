@@ -22,7 +22,7 @@ const sendToAll = (chatID, message) => users.filter(u => u.chat === chatID).forE
 /* check if the chat exist and return chat users or null */
 app.get('/chat', (req, res) => { 
     const chat = req.query.id;
-    if(chats.includes(chat)) res.send(JSON.stringify(getChatUsers(chat)));
+    if(chats.includes(chat)) res.send(getChatUsers(chat).map(u => u.uid));
     else res.send(null);
   })
 
