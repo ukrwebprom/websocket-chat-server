@@ -47,6 +47,7 @@ app.post('/chat/user', (req, res) =>{
     console.log('chat to enter:', chatID)
     if(chat) {
         chat.users.push({hash:Hash, uid:uid});
+        console.log(chat);
         sendToAll(chatID, 'need_upd');
         res.send(chat.users);
     }
