@@ -105,6 +105,7 @@ server.on('connection', (ws, req) => {
 
     ws.on('message', message => {
         const data = JSON.parse(message);
+        console.log("got message:", data);
         sendToAll(getUserByHash(Hash).chat, data);
     })
 })
