@@ -47,7 +47,7 @@ app.post('/chat/user', (req, res) =>{
         getUserByHash(Hash).chat = chatID;
         getUserByHash(Hash).uid = uid;
         sendToAll(chatID, 'need_upd');
-        res.send(getChatUsers(chatID).map(u => {uid:u.uid}));
+        res.send(getChatUsers(chatID).map(u => u.uid));
     }
     else throw new Error('CHAT IS NOT EXIST');
 })
