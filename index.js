@@ -92,7 +92,7 @@ server.on('connection', (ws, req) => {
     const url = new URL(req.url, 'wss://tranquil-reaches-58824.herokuapp.com/');
     const Hash = url.searchParams.get('Hash');
 
-    if(!users.find(u => u.Hash === Hash)) users.push({ws, Hash, chat:none, uid:none});
+    if(!users.find(u => u.Hash === Hash)) users.push({ws, Hash, chat:"", uid:""});
 
     const sendPing = () => {
         ws.send(JSON.stringify({message:'ping'}));
