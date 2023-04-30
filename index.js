@@ -17,7 +17,7 @@ const server = new WebSocketServer.WebSocketServer({server: httpServer});
 
 const getUserByHash = (hash) => users.find(u => u.Hash === hash);
 const getChatUsers = (chat) => users.filter(u => u.chat === chat);
-const sendToAll = (chatID, message) => users.filter(u => u.chat === chatID).forEach(w => w.ws.send(JSON.stringify({message:message})));
+const sendToAll = (chatID, m) => users.filter(u => u.chat === chatID).forEach(w => w.ws.send(JSON.stringify(m)));
 
 /* check if the chat exist and return chat users or null */
 app.get('/chat', (req, res) => { 
