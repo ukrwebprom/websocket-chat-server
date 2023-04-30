@@ -25,7 +25,7 @@ const updateChat = (receivers) => {
 
 app.get('/chat', (req, res) => {
     const chat = chats.find(c => c.id === req.query.id);
-    if(chat) res.send(chat.users);
+    if(chat) res.send(JSON.stringify(chat.users));
     else res.send(null);
   })
 
