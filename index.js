@@ -83,8 +83,6 @@ const removeUser = (zombieHash) => {
             }
         }
     }
-    console.log(chat);
-    
 }
 
 
