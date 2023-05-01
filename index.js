@@ -10,7 +10,6 @@ var sr = require('simple-random');
 
 const users = [];
 const chats = [];
-let ping = {}
 
 const httpServer = http.createServer(app);
 const server = new WebSocketServer.WebSocketServer({server: httpServer});
@@ -95,7 +94,7 @@ server.on('connection', (ws, req) => {
         ws.send(JSON.stringify('ping'));
     }
 
-    ping = setInterval(sendPing, 5000);
+    let ping = setInterval(sendPing, 5000);
 
     ws.on('close', () => {
         console.log('closed');
