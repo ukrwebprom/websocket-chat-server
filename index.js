@@ -18,11 +18,18 @@ const getUserByHash = (hash) => users.find(u => u.Hash === hash);
 const getChatUsers = (chat) => users.filter(u => u.chat === chat);
 const sendToAll = (chatID, m) => users.filter(u => u.chat === chatID).forEach(w => w.ws.send(JSON.stringify(m)));
 
-/* check if the chat exist and return chat users or null */
-app.get('/chat', (req, res) => { 
+
+app.get('/chat/users', (req, res) => { 
     const chat = req.query.id;
     if(chats.includes(chat)) res.send(getChatUsers(chat).map(u => u.uid));
     else res.send(null);
+  })
+
+/* check if the chat exist and return chat users or null */
+app.get('/chat', (req, res) => { 
+    const chat = req.query.id;
+    if(chats.includes(chat)) res.send(true);
+    else res.send(false);
   })
 
 /* create a new chat. return new chat object */
