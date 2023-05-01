@@ -17,7 +17,15 @@ const server = new WebSocketServer.WebSocketServer({server: httpServer});
 const getUserByHash = (hash) => users.find(u => u.Hash === hash);
 const getChatUsers = (chat) => users.filter(u => u.chat === chat);
 const sendToAll = (chatID, m) => users.filter(u => u.chat === chatID).forEach(w => w.ws.send(JSON.stringify(m)));
-
+const clearChats = () => {
+    for( var i = 0; i < chats.length; i++){ 
+        if(getChatUsers(chats[i]).length === 0) { 
+            users.splice(i, 1); 
+            break;
+        }
+    }
+}
+setInterval(clearChats, 50000);
 
 app.get('/chat/users', (req, res) => { 
     const chat = req.query.id;
@@ -59,22 +67,6 @@ app.post('/chat/user', (req, res) =>{
 
 httpServer.listen(port, () => {console.log('listening')})
 
-/* const sendToAll = (id, message) => {
-    users.filter(u => u.chatID === id).forEach(e => {
-        console.log('send');
-        e.ws.send(JSON.stringify(message))});
-}
-const getChatUsers = (chatID) => {
-    const usersList = users.filter(u => u.chatID === chatID).map(u => {
-        return {
-            userID: u.userID, 
-            photo: u.photo, 
-            name: u.name
-          }
-    })
-    console.log(usersList);
-    return usersList;
-} */
 
 const removeUser = (zombieHash) => {
     
@@ -112,7 +104,6 @@ server.on('connection', (ws, req) => {
 
     ws.on('message', message => {
         const data = JSON.parse(message);
-        console.log("got message:", data);
         const chatToSend = getUserByHash(Hash).chat;
         sendToAll(chatToSend, data);
     })
