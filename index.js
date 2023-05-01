@@ -25,7 +25,7 @@ const clearChats = () => {
         }
     }
 }
-setInterval(clearChats, 50000);
+setInterval(clearChats, 1800000);
 
 app.get('/chat/users', (req, res) => { 
     const chat = req.query.id;
