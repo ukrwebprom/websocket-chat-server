@@ -92,7 +92,7 @@ server.on('connection', (ws, req) => {
     if(!users.find(u => u.Hash === Hash)) users.push({ws, Hash, chat:"", uid:""});
 
     const sendPing = () => {
-        ws.send(JSON.stringify({message:'ping'}));
+        ws.send(JSON.stringify('ping'));
     }
 
     ping = setInterval(sendPing, 5000);
