@@ -72,7 +72,7 @@ const getChatUsers = (chatID) => {
 const removeUser = (zombieHash) => {
     
     if(typeof getUserByHash(zombieHash) !== 'undefined') {
-
+        const chat = getUserByHash(zombieHash).chat;
         for( var i = 0; i < users.length; i++){ 
                                        
             if ( users[i].Hash === zombieHash) { 
@@ -80,6 +80,7 @@ const removeUser = (zombieHash) => {
                 break;
             }
         }
+        sendToAll(chat, 'need_upd');
     }
 }
 
