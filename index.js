@@ -20,7 +20,7 @@ const sendToAll = (chatID, m) => users.filter(u => u.chat === chatID).forEach(w 
 const clearChats = () => {
     for( var i = 0; i < chats.length; i++){ 
         if(getChatUsers(chats[i]).length === 0) { 
-            users.splice(i, 1); 
+            chats.splice(i, 1); 
             break;
         }
     }
