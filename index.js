@@ -69,7 +69,9 @@ app.post('/chat/user', (req, res) =>{
 /* leave chat */
 app.delete('/chat/user', (req, res) =>{
     const Hash = req.query.hash;
-    getUserByHash(Hash).chat = ''; 
+    const chat = req.query.id;
+    getUserByHash(Hash).chat = '';
+    sendToAll(chat, 'need_upd');
     res.send('deleted');
 })
 
