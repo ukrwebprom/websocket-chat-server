@@ -68,9 +68,8 @@ app.post('/chat/user', (req, res) =>{
 
 /* leave chat */
 app.delete('/chat/user', (req, res) =>{
-    console.log("what to delete:", req.query.hash);
     const Hash = req.query.hash;
-/*     getUserByHash(Hash).chat = ''; */
+    getUserByHash(Hash).chat = ''; 
     res.send('deleted');
 })
 
