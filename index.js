@@ -67,9 +67,10 @@ app.post('/chat/user', (req, res) =>{
 
 /* leave chat */
 app.delete('/chat/user', (req, res) =>{
+    console.log(req.body);
     const Hash = req.body.hash;
-    getUserByHash(Hash).chat = '';
-    res.send(getChatUsers(chatID).map(u => u.uid));
+/*     getUserByHash(Hash).chat = ''; */
+    res.send('deleted');
 })
 
 httpServer.listen(port, () => {console.log('listening')})
