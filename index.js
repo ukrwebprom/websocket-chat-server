@@ -67,14 +67,9 @@ app.post('/chat/user', (req, res) =>{
 
 /* leave chat */
 app.delete('/chat/user', (req, res) =>{
-    const chatID = req.body.id;
     const Hash = req.body.hash;
-    console.log('chat to leave:', chatID)
-    if(chats.includes(chatID)) {
-        getUserByHash(Hash).chat = '';
-        res.send(getChatUsers(chatID).map(u => u.uid));
-    }
-    else throw new Error('CHAT IS NOT EXIST');
+    getUserByHash(Hash).chat = '';
+    res.send(getChatUsers(chatID).map(u => u.uid));
 })
 
 httpServer.listen(port, () => {console.log('listening')})
